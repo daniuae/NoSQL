@@ -1,0 +1,41 @@
+--Create Database
+
+use salesdb
+
+--Create collection
+
+db.createCollection("students")
+
+
+--5. CRUD Operations in Mongo Shell
+--Create
+
+db.students.insertOne({ name: "Priya", age: 22, course: "B.Tech" })
+
+db.students.insertMany([
+  { name: "Ravi", age: 24, course: "MCA" },
+  { name: "Anjali", age: 23, course: "MBA" }
+])
+
+--Read
+db.students.find()             --all documents
+db.students.find({ age: { $gt: 23 } }) -- filter
+--Update
+
+db.students.updateOne(
+  { name: "Priya" },
+  { $set: { course: "M.Tech" } }
+)
+
+--Delete
+
+db.students.deleteOne({ name: "Ravi" })
+
+
+db.students.createIndex({ name: 1 })
+
+-- Count students per course:
+db.students.aggregate([
+  { $group: { _id: "$course", total: { $sum: 1 } } }
+])
+
